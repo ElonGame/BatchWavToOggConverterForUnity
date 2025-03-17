@@ -100,5 +100,10 @@ namespace Batch_WAV_to_OGG_Converter
                 Application.Exit();
             }
         }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            hasMeta = true;
+        }
     }
 }
