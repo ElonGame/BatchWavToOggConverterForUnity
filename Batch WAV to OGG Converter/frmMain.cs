@@ -15,6 +15,8 @@ namespace Batch_WAV_to_OGG_Converter
     public partial class frmMain : Form
     {
         List<string> filenames;
+        bool hasMeta;
+        List<string> fileMetaNames;
         string filepath = "";
         int currentFile;
         Process process;
@@ -31,6 +33,20 @@ namespace Batch_WAV_to_OGG_Converter
             if (fbd.ShowDialog() == DialogResult.OK)
             {
                 txtSource.Text = fbd.SelectedPath;
+                if (hasMeta)
+                {
+                    fileMetaNames = new List<string>();
+                    fileMetaNames.AddRange(Directory.GetFiles(fbd.SelectedPath, "*.wav.meta"));
+                    if (fileMetaNames.Count > 0)
+                    {
+                        for (int i = 0; i < fileMetaNames.Count; i++)
+                        {
+                            string srcName = fileMetaNames[i];
+                            string newName = srcName.Replace(".wav", ".ogg");
+                            File.Move(srcName, newName);
+                        }
+                    }
+                }
                 filenames = new List<string>();
                 filenames.AddRange(Directory.GetFiles(fbd.SelectedPath, "*.wav"));
                 filepath = fbd.SelectedPath;
